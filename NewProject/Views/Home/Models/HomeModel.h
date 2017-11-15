@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HomeModel : BaseModel
+@interface HomeModel : NSObject
 
 @property (nonatomic, strong) NSMutableArray *Banner;
 @property (nonatomic, strong) NSMutableArray *Button;
@@ -20,20 +20,16 @@
 @property (nonatomic, assign) NSInteger Total;
 @property (nonatomic, strong) NSMutableArray *Data;
 
-
 /**
  *  首页数据接口
  */
-+ (NSURLSessionDataTask *)getHomeDataWithNetworkHUD:(NetworkHUD)hud
-                                             target:(id)target
-                                            success:(NetResponseBlock)success;
++ (NSURLSessionDataTask *)getHomeDataWithSuccess:(NetResponseBlock)success;
 
 /**
  *  获取广告列表
  */
 + (NSURLSessionDataTask *)getADListWithPages:(NSInteger)Pages
                                   networkHUD:(NetworkHUD)hud
-                                      target:(id)target
                                      success:(NetResponseBlock)success;
 
 /**
@@ -41,7 +37,6 @@
  */
 + (NSURLSessionDataTask *)getBingProductListWithPages:(NSInteger)Pages
                                            networkHUD:(NetworkHUD)hud
-                                               target:(id)target
                                               success:(NetResponseBlock)success;
 
 @end

@@ -77,18 +77,13 @@ static UIView *customView;
         }
     }
     
-    // 如果是填充模式
-    if (mode == MBProgressHUDModeDeterminate || mode == MBProgressHUDModeAnnularDeterminate || mode == MBProgressHUDModeDeterminateHorizontalBar) {
-        // 方法2
-        [mbProgressHUD showWhileExecuting:@selector(showProgress) onTarget:self withObject:nil animated:YES];
-    }
-    
+    mbProgressHUD.mode = mode;
     // 设置标示标签
-    [mbProgressHUD setLabelText:aMessage];
+    mbProgressHUD.label.text = aMessage;
     // 设置显示类型 出现或消失
     [mbProgressHUD setAnimationType:MBProgressHUDAnimationZoomOut];
     // 显示
-    [mbProgressHUD show:YES];
+    [mbProgressHUD showAnimated:YES];
     // 加上这个属性才能在HUD还没隐藏的时候点击到别的view
     // 取反，即!autoEnabled
     [mbProgressHUD setUserInteractionEnabled:!autoEnabled];
@@ -96,12 +91,12 @@ static UIView *customView;
     [mbProgressHUD setRemoveFromSuperViewOnHide:YES];
     // 设置自动隐藏
     if (autoHide) {
-        [mbProgressHUD hide:autoHide afterDelay:timeDelay];
+        [mbProgressHUD hideAnimated:autoHide afterDelay:timeDelay];
     }
 }
 
 + (void)hiddenHUD {
-    [mbProgressHUD hide:YES];
+    [mbProgressHUD hideAnimated:YES];
 }
 
 + (void)showProgress {

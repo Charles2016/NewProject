@@ -168,7 +168,7 @@
                 } else {
                     iToastText(response.Msg);
                 }
-                [HUDManager hiddenHUD];
+//                [HUDManager hiddenHUD];
             }];
         }
         

@@ -22,10 +22,9 @@
 /**
  *  首页数据接口
  */
-+ (NSURLSessionDataTask *)getHomeDataWithNetworkHUD:(NetworkHUD)hud
-                                             target:(id)target
-                                            success:(NetResponseBlock)success {
-    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"Home/QueryIndexInfo" params:nil networkHUD:hud target:target success:success];
++ (NSURLSessionDataTask *)getHomeDataWithSuccess:(NetResponseBlock)success {
+    return [BaseModel dataTaskMethod:HTTPMethodPOST path:@"Home/QueryIndexInfo" params:nil success:success];;
+    
 }
 
 /**
@@ -33,12 +32,11 @@
  */
 + (NSURLSessionDataTask *)getADListWithPages:(NSInteger)Pages
                                   networkHUD:(NetworkHUD)hud
-                                        target:(id)target
-                                        success:(NetResponseBlock)success {
+                                     success:(NetResponseBlock)success {
     CreateParamsDic;
     DicValueSet(@(Pages), @"PageIndex");
     DicValueSet(@(kPageSize), @"PageSize");
-     return [[self class] dataTaskMethod:HTTPMethodPOST path:@"Home/QueryIndexBottom" params:ParamsDic networkHUD:hud target:target success:success];
+    return [BaseModel dataTaskMethod:HTTPMethodPOST path:@"Home/QueryIndexBottom" params:ParamsDic networkHUD:hud success:success];
 }
 
 /**
@@ -46,12 +44,11 @@
  */
 + (NSURLSessionDataTask *)getBingProductListWithPages:(NSInteger)Pages
                                            networkHUD:(NetworkHUD)hud
-                                               target:(id)target
                                               success:(NetResponseBlock)success {
     CreateParamsDic;
     DicValueSet(@(Pages), @"PageIndex");
     DicValueSet(@(kPageSize), @"PageSize");
-    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"Home/QueryBigBrand" params:ParamsDic networkHUD:hud target:target success:success];
+    return [BaseModel dataTaskMethod:HTTPMethodPOST path:@"Home/QueryBigBrand" params:ParamsDic networkHUD:hud success:success];
 }
 
 @end

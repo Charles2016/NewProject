@@ -7,6 +7,7 @@
 //
 
 #import "HomeVC.h"
+#import "HomeModel.h"
 
 @interface HomeVC ()
 
@@ -18,15 +19,11 @@
     [super viewDidLoad];
     self.navigationItem.title = @"商城";
     self.view.backgroundColor = kColorWhite;
-    
-    NSString *aa = @"fdsafds";
-    BOOL isMobile = [aa isMobile];
-    DLog(@"isNull:%d", isMobile);
-    isMobile = [@"17622289999" isMobile];
-    DLog(@"isNull:%d", isMobile);
-//    [HomeModel getCommitOrderWithNetworkHUD:NetworkHUDMsg target:self success:^(StatusModel *response) {
-//        DLog(@"%@", response);
-//    }];
+    [HUDManager showHUDWithMessage:@"加载数据中..."];
+    [HomeModel getHomeDataWithSuccess:^(StatusModel *response) {
+        [HUDManager hiddenHUD];
+        DLog(@"%@", response);
+    }];
     
     /*// 1、创建URL资源地址
     NSURL *url = [NSURL URLWithString:@"https://open.weibo.cn/2/statuses/update.json"];

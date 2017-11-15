@@ -25,7 +25,6 @@
 }
 
 #pragma mark - DB
-
 + (LKDBHelper *)getUsingLKDBHelper {
     static LKDBHelper* db;
     static dispatch_once_t onceToken;
@@ -80,10 +79,6 @@
     }
     NSString* createTableSQL = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@(%@)", [self getTableName], tablePars];
     return createTableSQL;
-}
-
-+ (void)releaseLKDBHelp {
-    
 }
 
 #pragma mark - 映射
@@ -150,173 +145,75 @@
 
 #pragma mark - dataTaskMethod
 /**
- * 请求不带缓存和进度方法
- * @param method     请求模式
- * @param path       HTTP路径
- * @param params     请求参数
- * @param success    完成Block
+ * 请求无缓存无提示方法1
+ * @param method           请求模式
+ * @param path             HTTP路径
+ * @param params           请求参数
+ * @param success          完成Block（若有缓存会返回两次block，第一次是数据库返回，第二次是网络返回数据）
  * @return NSURLSessionDataTask
  */
 + (NSURLSessionDataTask *)dataTaskMethod:(HTTPMethod)method
                                     path:(NSString *)path
                                   params:(id)params
                                  success:(NetResponseBlock)success {
-    return [self netDataTaskMethod:method
-                              path:path
-                            params:params
-                        networkHUD:NetworkHUDBackground
-                            target:nil
-                    uploadProgress:nil
-                  downloadProgress:nil
-                         cacheTime:0
-                           success:success];
+    return [[self class] dataTaskMethod:method path:path params:params networkHUD:NetworkHUDBackground success:success];
 }
 
 /**
- * 请求带HUD状态方法
- * @param method     请求模式
- * @param path       HTTP路径
- * @param params     请求参数
- * @param networkHUD HUD状态，如需不锁导航栏必须传target
- * @param target     目标UIViewController，用于addNet:,返回按钮按下会断开网络请求
- * @param success    完成Block
+ * 请求无缓存有提示方法2
+ * @param method           请求模式
+ * @param path             HTTP路径
+ * @param params           请求参数
+ * @param success          完成Block（若有缓存会返回两次block，第一次是数据库返回，第二次是网络返回数据）
  * @return NSURLSessionDataTask
  */
 + (NSURLSessionDataTask *)dataTaskMethod:(HTTPMethod)method
                                     path:(NSString *)path
                                   params:(id)params
                               networkHUD:(NetworkHUD)networkHUD
-                                  target:(id)target
                                  success:(NetResponseBlock)success {
-    return [self netDataTaskMethod:method
-                              path:path
-                            params:params
-                        networkHUD:networkHUD
-                            target:target
-                    uploadProgress:nil
-                  downloadProgress:nil
-                         cacheTime:0
-                           success:success];
+    return [[self class] dataTaskMethod:method path:path params:params networkHUD:networkHUD cacheTime:0 success:success];
 }
 
 /**
- * 请求带缓存和HUD状态
- * @param method     请求模式
- * @param path       HTTP路径
- * @param params     请求参数
- * @param networkHUD HUD状态，如需不锁导航栏必须传target
- * @param target     目标UIViewController，用于addNet:,返回按钮按下会断开网络请求
- * @param time       缓存失效时间time==-1.同时取数据库/网络 time==0.不取数据库直接取网络  time>1  缓存没有失效取数据库，否则取网络
- * @param dbSuccess  读取缓存的Block，传nil代表不缓存
- * @param success    完成Block
- * @return NSURLSessionDataTask
- */
-+ (NSURLSessionDataTask *)dataTaskMethod:(HTTPMethod)method
-                                    path:(NSString *)path
-                                  params:(id)params
-                              networkHUD:(NetworkHUD)networkHUD
-                                  target:(id)target
-                               cacheTime:(NSInteger)cacheTime
-                                 success:(NetResponseBlock)success {
-    return [self dataTaskMethod:method
-                           path:path
-                         params:params
-                     networkHUD:networkHUD
-                         target:target
-                 uploadProgress:nil
-               downloadProgress:nil
-                      cacheTime:cacheTime
-                        success:success];
-}
-
-/**
- * 请求带缓存和HUD状态和进度方法
+ * 请求有缓存和HUD方法3
  * @param method           请求模式
  * @param path             HTTP路径
  * @param params           请求参数
  * @param networkHUD       HUD状态，如需不锁导航栏必须传target
- * @param target           目标UIViewController，用于addNet:,返回按钮按下会断开网络请求
- * @param uploadProgress   上传进度
- * @param downloadProgress 下载进度
- * @param cacheTime        缓存失效时间cacheTime==-1.同时取数据库/网络 cacheTime==0.不取数据库直接取网络  cacheTime>1  缓存没有失效取数据库，否则取网络
- * @param dbSuccess        读取缓存的Block，传nil代表不缓存
- * @param success          完成Block
+ * @param cacheTime        cacheTime 0只取网络  1先取缓存后取网络，并更新缓存
+ * @param success          完成Block（若有缓存会返回两次block，第一次是数据库返回，第二次是网络返回数据）
  * @return NSURLSessionDataTask
  */
 + (NSURLSessionDataTask *)dataTaskMethod:(HTTPMethod)method
                                     path:(NSString *)path
                                   params:(id)params
                               networkHUD:(NetworkHUD)networkHUD
-                                  target:(id)target
-                          uploadProgress:(nullable void (^)(NSProgress *uploadProgress)) uploadProgress
-                        downloadProgress:(nullable void (^)(NSProgress *downloadProgress)) downloadProgress
                                cacheTime:(NSInteger)cacheTime
                                  success:(NetResponseBlock)success {
-    return [self netDataTaskMethod:method
-                              path:path
-                            params:params
-                        networkHUD:networkHUD
-                            target:target
-                    uploadProgress:uploadProgress
-                  downloadProgress:downloadProgress
-                         cacheTime:cacheTime
-                           success:success];
-    
-    /*__block NSURLSessionDataTask *dataTask;
-    if (success && (cacheTime == -1 || cacheTime > 0)) {
-        [DataCache queryWithPath:path parameter:params result:^(DataCache *data) {
-            BOOL getNet = YES;
-            DataCache *cache = data;
-            if (cache) {
-                NSDate *date = [NSDate dateWithTimeInterval:-cacheTime sinceDate:[NSDate date]];
-                if (cacheTime == -1 || (cache.updateDate && [cache.updateDate compare:date] == NSOrderedDescending)) {
-                    id JSON = [self transformMethodByDictionaryOrJsonStr:cache.content];
-                    success([self statusModelFromJSONObject:JSON]);
-                    getNet = NO;
-                }
-            }
-            if (cacheTime == -1) {
-                getNet = NO;
-            }
-            //根据需要是否调网络
-            if (getNet) {
-                dataTask = [self netDataTaskMethod:method
-                                              path:path
-                                            params:params
-                                        networkHUD:networkHUD
-                                            target:target
-                                    uploadProgress:uploadProgress
-                                  downloadProgress:downloadProgress
-                                         cacheTime:cacheTime
-                                           success:success];
-            }
-        }];
-    }
-    if(cacheTime == -1 || cacheTime == 0 || !success){
-        dataTask = [self netDataTaskMethod:method
-                                      path:path
-                                    params:params
-                                networkHUD:networkHUD
-                                    target:target
-                            uploadProgress:uploadProgress
-                          downloadProgress:downloadProgress
-                                 cacheTime:cacheTime
-                                   success:success];
-    }
-    return dataTask;*/
+    return [[self class] dataTaskMethod:method path:path params:params networkHUD:networkHUD uploadProgress:nil downloadProgress:nil cacheTime:cacheTime success:success];
 }
 
-//内部方法禁止调用
-+ (NSURLSessionDataTask *)netDataTaskMethod:(HTTPMethod)method
-                                       path:(NSString *)path
-                                     params:(id)params
-                                 networkHUD:(NetworkHUD)networkHUD
-                                     target:(id)target
-                             uploadProgress:(nullable void(^)(NSProgress *uploadProgress))uploadProgress
-                           downloadProgress:(nullable void(^)(NSProgress *downloadProgress))downloadProgress
-                                  cacheTime:(NSInteger)cacheTime
-                                    success:(NetResponseBlock)success {
-    /*[self startHUD:networkHUD target:target];*/
+/**
+ * 请求带缓存和HUD状态和进度方法4
+ * @param method           请求模式
+ * @param path             HTTP路径
+ * @param params           请求参数
+ * @param networkHUD       HUD状态，如需不锁导航栏必须传target
+ * @param uploadProgress   上传进度
+ * @param downloadProgress 下载进度
+ * @param cacheTime        cacheTime 0只取网络  1先取缓存后取网络，并更新缓存
+ * @param success          完成Block（若有缓存会返回两次block，第一次是数据库返回，第二次是网络返回数据）
+ * @return NSURLSessionDataTask
+ */
++ (NSURLSessionDataTask *)dataTaskMethod:(HTTPMethod)method
+                                    path:(NSString *)path
+                                  params:(id)params
+                              networkHUD:(NetworkHUD)networkHUD
+                          uploadProgress:(void(^)(NSProgress *uploadProgress))uploadProgress
+                        downloadProgress:(void(^)(NSProgress *downloadProgress))downloadProgress
+                               cacheTime:(NSInteger)cacheTime
+                                 success:(NetResponseBlock)success {
     NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:params];
     // 加密处理
     mutableDic = [NSMutableDictionary dictionaryWithDictionary:[self encryptWithParams:mutableDic]];
@@ -329,7 +226,7 @@
     [self setHttpHeaderValuesIsNeedLocation:isNeedLocation];
     // 排序添加sign参数处理
     // params = [self getSortParamsWithDic:mutableDic];
-    if (cacheTime == -1 || cacheTime > 0) {
+    if (cacheTime) {
         NSMutableDictionary *paramsDic = [NSMutableDictionary dictionaryWithDictionary:params];
         [DataCache queryWithPath:path parameter:paramsDic result:^(DataCache *data) {
             DataCache *cache = data;
@@ -378,7 +275,7 @@
     }
     NSLog (@"\n请求:---------------->%@:%@%@\n%@\n%@\n", methodStr, kServerHost, path, jsonString ,kHttpClient.requestSerializer.HTTPRequestHeaders);
 #endif
-    
+    // 此方法为AFNetworking内部方法，AFHTTPSessionManager.m上
     NSURLSessionDataTask *dataTask = [kHttpClient dataTaskWithHTTPMethod:methodStr
                                                                URLString:path
                                                               parameters:params
@@ -400,7 +297,6 @@
                                                                                        parameter:paramsDic
                                                                                          content:JSON];
                                                                      }
-                                                                     /*[self handleResponse:model networkHUD:networkHUD];*/
                                                                      if(success) {
                                                                          success(model);
                                                                      }
@@ -410,13 +306,14 @@
                                                                      DLog (@"\n响应：--------------------->%@%@\n%@", kServerHost, path, error.localizedDescription);
 #endif
                                                                      StatusModel *model = [[StatusModel alloc] initWithError:error];
-                                                                     /*[self handleResponse:model networkHUD:networkHUD];*/
                                                                      if(success) {
                                                                          success(model);
                                                                      }
                                       }];
     
     [dataTask resume];
+    // 将请求加入到当前VC的数据请求队列中，方便统一释放
+    id target = [SuperVC topViewController];
     if (target && [target respondsToSelector:@selector (addNet:)]) {
         [target performSelector:@selector (addNet:) withObject:dataTask];
     }
@@ -437,7 +334,6 @@
                                files:(NSArray *)files
                               params:(id)params
                           networkHUD:(NetworkHUD)networkHUD
-                              target:(id)target
                              success:(NetResponseBlock)success {
     path = [NSString stringWithFormat:@"%@/%@",kServerHost, path];
 //    [self startHUD:networkHUD target:target];
@@ -484,8 +380,6 @@
                                                                                  } else {
                                                                                      model = [[StatusModel alloc] initWithCode:-100 msg:NSLocalizedString (@"json_error", nil)];
                                                                                  }
-                                                                                 /*[self checkResponseCode:model];
-                                                                                  [self handleResponse:model networkHUD:networkHUD];*/
                                                                                  if(success) {
                                                                                      success(model);
                                                                                  }
@@ -495,7 +389,6 @@
                                                                                  DLog (@"\n响应：--------------------->%@\n%@", path, error.localizedDescription);
 #endif
                                                                                  StatusModel *model = [[StatusModel alloc] initWithError:error];
-                                                                                 /*[self handleResponse:model networkHUD:networkHUD];*/
                                                                                  if(success) {
                                                                                      success(model);
                                                                                  }
@@ -518,10 +411,8 @@
                                         image:(UIImage *)image
                                        params:(id)params
                                    networkHUD:(NetworkHUD)networkHUD
-                                       target:(id)target
                                       success:(NetResponseBlock)success {
     path = [NSString stringWithFormat:@"%@%@",kServerHost, path];
-    //    [self startHUD:networkHUD target:target];
     kHttpClient.requestType = RequestOhter;
     kHttpClient.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"text/plain", nil];
     // 加密处理
@@ -566,8 +457,6 @@
                                                                                  } else {
                                                                                      model = [[StatusModel alloc] initWithCode:-100 msg:NSLocalizedString (@"json_error", nil)];
                                                                                  }
-                                                                                 /*[self checkResponseCode:model];
-                                                                                  [self handleResponse:model networkHUD:networkHUD];*/
                                                                                  if(success) {
                                                                                      success(model);
                                                                                  }
@@ -577,7 +466,6 @@
                                                                                  DLog (@"\n响应：--------------------->%@\n%@", path, error.localizedDescription);
 #endif
                                                                                  StatusModel *model = [[StatusModel alloc] initWithError:error];
-                                                                                 /*[self handleResponse:model networkHUD:networkHUD];*/
                                                                                  if(success) {
                                                                                      success(model);
                                                                                  }
@@ -599,7 +487,6 @@
                       images:(NSArray *)images
                       params:(id)params
                   networkHUD:(NetworkHUD)networkHUD
-                      target:(id)target
                      success:(NetResponseBlock)success {
     // [self startHUD:networkHUD target:target];
     kHttpClient.requestType = RequestOhter;
@@ -616,7 +503,7 @@
     dispatch_group_t group = dispatch_group_create();
     for (NSInteger i = 0; i < images.count; i++) {
         dispatch_group_enter(group);
-        [[self class] uploadImageWithPath:path image:images[i] params:params networkHUD:networkHUD target:target success:^(StatusModel *response) {
+        [[self class] uploadImageWithPath:path image:images[i] params:params networkHUD:networkHUD success:^(StatusModel *response) {
             if (response.Success) {
                 DLog(@"第 %d 张图片上传成功: %@", (int)i + 1, response.Data);
                 @synchronized (result) { // NSMutableArray 是线程不安全的，所以加个同步锁
@@ -693,7 +580,7 @@
         [signStr appendString:value];
     }
     [signStr appendString:kAPPSecretKey];
-//    signStr = [[signStr sha1String] copy];
+    //signStr = [[signStr sha1String] copy];
     signStr = [[signStr uppercaseString] copy];
     [params setValue:signStr forKey:@"sign"];
     return params;
@@ -751,9 +638,9 @@
                 [dic setValue:rsaString forKey:key];
             }
         } else if ([encryptWithSHA1 containsObject:key]) {
-//            NSString *oldObject = [dic objectForKey:key];
-//            NSString *rsaString = [[oldObject sha1String] uppercaseString];
-//            [dic setValue:rsaString forKey:key];
+            /*NSString *oldObject = [dic objectForKey:key];
+            NSString *rsaString = [[oldObject sha1String] uppercaseString];
+            [dic setValue:rsaString forKey:key];*/
         }
     }
     return [NSDictionary dictionaryWithDictionary:dic];

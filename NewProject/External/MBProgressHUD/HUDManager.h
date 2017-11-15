@@ -33,7 +33,7 @@
  * @param autoEnabled 加载视图显示过程中是否允许操作
  * @param aMessage    加载视图显示的文字信息
  */
-+ (void)showHUD:(MBProgressHUDMode)mode onTarget:(UIView *)target hide:(BOOL)autoHide afterDelay:(NSTimeInterval)timeDelay enabled:(BOOL )autoEnabled message:(NSString *)aMessage;
++ (void)showHUD:(MBProgressHUDMode)mode onTarget:(UIView *)target hide:(BOOL)autoHide afterDelay:(NSTimeInterval)timeDelay enabled:(BOOL)autoEnabled message:(NSString *)aMessage;
 
 /// 隐藏
 + (void)hiddenHUD;

@@ -52,7 +52,7 @@
     }
     // 提交意见
     @weakify(self);
-    [OpinionModel getOpinionWithText:_textView.text networkHUD:NetworkHUDMsg target:self success:^(StatusModel *response) {
+    [OpinionModel getOpinionWithText:_textView.text networkHUD:NetworkHUDMsg success:^(StatusModel *response) {
         if (response.Success) {
             @strongify(self);
             iToastText(@"感谢您的建议，你的意见与建议已发送至产品意见箱！");

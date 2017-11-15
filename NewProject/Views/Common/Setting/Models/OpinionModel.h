@@ -15,7 +15,6 @@
  */
 + (NSURLSessionDataTask *)getOpinionWithText:(NSString *)text
                                   networkHUD:(NetworkHUD)hud
-                                      target:(id)target
                                      success:(NetResponseBlock)success;
 
 @end

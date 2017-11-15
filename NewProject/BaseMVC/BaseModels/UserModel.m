@@ -36,7 +36,7 @@
     CreateParamsDic;
     DicValueSet(phone, @"Phone");
     DicValueSet(code, @"Code");
-    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"User/Login" params:ParamsDic networkHUD:hud target:target success:success];
+    return [BaseModel dataTaskMethod:HTTPMethodPOST path:@"User/Login" params:ParamsDic networkHUD:hud success:success];
 }
 
 /**
@@ -53,7 +53,7 @@
                                                success:(NetResponseBlock)success {
     CreateParamsDic;
     DicValueSet(phone, @"Phone");
-    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"User/SendMNS" params:ParamsDic networkHUD:hud target:target success:success];
+    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"User/SendMNS" params:ParamsDic networkHUD:hud success:success];
 }
 
 @end
@@ -67,7 +67,7 @@
 + (NSURLSessionDataTask *)getTokenSuccess:(NetResponseBlock)success {
     CreateParamsDic;
     DicValueSet(kDeviceId, @"IDCard");
-    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"Core/GetToken" params:ParamsDic networkHUD:NetworkHUDBackground target:nil success:success];
+    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"Core/GetToken" params:ParamsDic networkHUD:NetworkHUDBackground success:success];
 }
 
 @end
@@ -92,7 +92,7 @@
         url = @"User/UpdateBirth";
     }
     DicValueSet(value, key);
-    return [[self class] dataTaskMethod:HTTPMethodPOST path:url params:ParamsDic networkHUD:NetworkHUDBackground target:nil success:success];
+    return [[self class] dataTaskMethod:HTTPMethodPOST path:url params:ParamsDic networkHUD:NetworkHUDBackground success:success];
 }
 
 /**
@@ -102,7 +102,7 @@
                                         networkHUD:(NetworkHUD)hud
                                             target:(id)target
                                            success:(NetResponseBlock)success {
-    return [[self class] uploadImageWithPath:@"/FileUpLoad/CommentFileUpLoad" image:image params:nil networkHUD:NetworkHUDMsg target:self success:success];
+    return [[self class] uploadImageWithPath:@"/FileUpLoad/CommentFileUpLoad" image:image params:nil networkHUD:NetworkHUDMsg success:success];
 }
 
 /**
@@ -112,7 +112,7 @@
                        networkHUD:(NetworkHUD)hud
                            target:(id)target
                           success:(NetResponseBlock)success {
-    [[self class] uploadImagesWithPath:@"FileUpLoad/CommentFileUpLoad" images:images params:nil networkHUD:NetworkHUDMsg target:target success:success];
+    [[self class] uploadImagesWithPath:@"FileUpLoad/CommentFileUpLoad" images:images params:nil networkHUD:NetworkHUDMsg success:success];
 }
 
 /**
@@ -124,7 +124,7 @@
                                              success:(NetResponseBlock)success {
     CreateParamsDic;
     DicValueSet(pathStr, @"HeadPortrait");
-    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"User/UpdateHeadPic" params:ParamsDic networkHUD:NetworkHUDBackground target:nil success:success];
+    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"User/UpdateHeadPic" params:ParamsDic networkHUD:NetworkHUDBackground success:success];
 }
 
 

@@ -15,12 +15,11 @@
  */
 + (NSURLSessionDataTask *)getOpinionWithText:(NSString *)text
                                   networkHUD:(NetworkHUD)hud
-                                      target:(id)target
                                      success:(NetResponseBlock)success {
     
     CreateParamsDic;
     DicValueSet(text, @"Content");
-    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"user/SubmitFeedback" params:ParamsDic networkHUD:hud target:target success:success];
+    return [[self class] dataTaskMethod:HTTPMethodPOST path:@"user/SubmitFeedback" params:ParamsDic networkHUD:hud success:success];
 }
 
 @end
