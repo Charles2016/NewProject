@@ -72,7 +72,6 @@
 }
 
 #pragma mark - Private
-
 /// 格式化输出系统提示信息
 + (NSString *)innerFormatMessage:(NSInteger)flag msg:(NSString *)msg {
     NSString *tmpMsg = msg;

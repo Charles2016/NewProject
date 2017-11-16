@@ -632,7 +632,6 @@ UIImagePickerController *InsertImagePicker(UIImagePickerControllerSourceType sty
 /****************************************************************/
 
 #pragma mark - 父视图或父视图控制器的操作
-
 void AddSubController(UIView *view, UIViewController *ctrl, BOOL animation) {
     [ctrl viewWillAppear:animation];
     [view addSubview:ctrl.view];
@@ -654,7 +653,6 @@ void RemoveAllSubviews(UIView *view) {
 /****************************************************************/
 
 #pragma mark - 设置时间定时器
-
 NSTimer *SetTimer(NSTimeInterval timeElapsed, id target, SEL selector) {
     NSTimer *ret = [NSTimer timerWithTimeInterval:timeElapsed target:target selector:selector userInfo:nil repeats:YES];
     if (nil == ret) {

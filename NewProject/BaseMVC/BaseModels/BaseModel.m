@@ -293,9 +293,7 @@
                                                                          NSMutableDictionary *paramsDic = [NSMutableDictionary dictionaryWithDictionary:params];
                                                                          [paramsDic removeObjectForKey:@"sign"];
                                                                          [paramsDic removeObjectForKey:@"time"];
-                                                                        [DataCache cacheWithPath:path
-                                                                                       parameter:paramsDic
-                                                                                         content:JSON];
+                                                                         [DataCache cacheWithPath:path parameter:paramsDic content:JSON];
                                                                      }
                                                                      if(success) {
                                                                          success(model);
@@ -336,7 +334,6 @@
                           networkHUD:(NetworkHUD)networkHUD
                              success:(NetResponseBlock)success {
     path = [NSString stringWithFormat:@"%@/%@",kServerHost, path];
-//    [self startHUD:networkHUD target:target];
      kHttpClient.requestType = RequestOhter;
      kHttpClient.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"text/plain", nil];
     // 加密处理

@@ -18,7 +18,7 @@
 typedef NS_ENUM(NSUInteger, NetworkHUD) {
     /// 不锁屏，不提示
     NetworkHUDBackground = 0,
-    /// 不锁屏，只要msg不为空就提示
+    /// 不锁屏，显示请求返回的提示信息
     NetworkHUDMsg = 1,
     /// 不锁屏，提示错误信息
     NetworkHUDError = 2,
