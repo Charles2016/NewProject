@@ -35,9 +35,7 @@ UIScrollView *InsertScrollView(UIView *superView, CGRect rect, int tag,id<UIScro
 #pragma mark UILabel
 /// 实例化UILabel，带自适应高度
 UILabel *InsertLabel(id superView, CGRect cRect, NSTextAlignment align, NSString *contentStr, UIFont *textFont, UIColor *textColor, BOOL resize);
-
-/// 实例化UILabel，带阴影
-UILabel *InsertLabelWithShadow(id superView, CGRect cRect, NSTextAlignment align, NSString *contentStr, UIFont *textFont, UIColor *textColor, BOOL resize, BOOL shadow, UIColor *shadowColor, CGSize shadowOffset);
+UILabel *InsertLabelM(id superView, NSTextAlignment align, NSString *contentStr, UIFont *textFont, UIColor *textColor, BOOL resize);
 
 #pragma mark UIWebView
 /// 实例化UIWebView
@@ -47,34 +45,15 @@ UIWebView *InsertWebView(id superView,CGRect cRect, id<UIWebViewDelegate>delegat
 void WebSimpleLoadRequest(UIWebView *web, NSString *strURL);
 void WebSimpleLoadRequestWithCookie(UIWebView *web, NSString *strURL, NSString *cookies);
 
-#pragma mark UIbutton
-/// 实例化UIbutton（带标题的圆角样式）
-UIButton *InsertButtonRoundedRect(id view, CGRect rc, int tag, NSString *title, id target, SEL action);
-
-/// 实例化UIbutton（带图片的自定义样式）
-UIButton *InsertImageButton(id view, CGRect rc, int tag, UIImage *img, UIImage *imgH, id target, SEL action);
-
-/// 实例化UIbutton（带图片及标题的自定义样式）
-UIButton *InsertImageButtonWithTitle(id view, CGRect rc, int tag, UIImage *img, UIImage *imgH, NSString *title, UIEdgeInsets edgeInsets, UIFont *font, UIColor *color, id target, SEL action);
-
-/// 实例化UIbutton（带标题与图片的自定义样式）
-UIButton *InsertTitleAndImageButton(id view, CGRect rc, int tag, NSString *title, UIEdgeInsets edgeInsets, UIFont *font, UIColor *color, UIColor *colorH, UIImage *img, UIImage *imgH, id target, SEL action);
-
-/// 实例化UIbutton（带选中图片及选中标题的自定义样式)
-UIButton *InsertImageButtonWithSelectedImageAndSelectedTitle(id view, CGRect rc, int tag, UIImage *img, UIImage *imgH, UIImage *imgSelected, BOOL selected, NSString *title, UIEdgeInsets edgeInsets, UIFont *font, UIColor *color, UIColor *colorSelected, id target, SEL action);
-
-/// 实例化UIbutton（带选中图片的自定义样式）
-UIButton *InsertImageButtonWithSelectedImage(id view, CGRect rc, int tag, UIImage *img, UIImage *imgH, UIImage *imgSelected, BOOL selected, id target, SEL action);
-
-/// 实例化UIbutton（带选中图片及标题的自定义样式）
-UIButton *InsertImageButtonWithSelectedImageAndTitle(id view, CGRect rc, int tag, UIImage *img, UIImage *imgH, UIImage *imgSelected, BOOL selected, NSString *title, UIEdgeInsets edgeInsets, UIFont *font, UIColor *color, id target, SEL action);
-
+#pragma mark UIButton
 /// 实例化UIbutton（自定义样式）
-UIButton *InsertButtonWithType(id view, CGRect rc, int tag, id target, SEL action, UIButtonType type);
+UIButton *InsertButton(id view, CGRect rc, int tag, id target, SEL action, UIButtonType type);
+UIButton *InsertButtonM(id view, id target, SEL action);
 
 #pragma mark UITableView
 /// 实例化UITableView
 UITableView *InsertTableView(id superView, CGRect rect, id<UITableViewDataSource> dataSoure, id<UITableViewDelegate> delegate, UITableViewStyle style, UITableViewCellSeparatorStyle cellStyle);
+UITableView *InsertTableViewM(id superView, id<UITableViewDataSource> dataSoure, id<UITableViewDelegate> delegate, UITableViewStyle style, UITableViewCellSeparatorStyle cellStyle);
 
 #pragma mark UITextField
 /// 实例化UITextField，未设置字体颜色
@@ -103,16 +82,12 @@ UISwitch *InsertSwitch(id view, CGRect rc);
 #pragma mark UIImageView
 /// 实例化UIImageView
 UIImageView *InsertImageView(id view, CGRect rect, UIImage *image);
+UIImageView *InsertImageViewM(id view, UIImage *image);
 
 #pragma mark UIView
 /// 实例化UIView
 UIView *InsertView(id view, CGRect rect, UIColor *backColor);
-
-/// 实例化UIView，带边框
-UIView *InsertViewWithBorder(id view, CGRect rect, UIColor *backColor, CGFloat borderwidth, UIColor *bordercolor);
-
-/// 实例化UIView，带边框和圆角
-UIView *InsertViewWithBorderAndCorRadius(id view, CGRect rect, UIColor *backColor, CGFloat borderwidth, UIColor *bordercolor, CGFloat corRadius);
+UIView *InsertViewM(id view, UIColor *backColor);
 
 #pragma mark UIPickerView
 /// 实例化UIPickerView

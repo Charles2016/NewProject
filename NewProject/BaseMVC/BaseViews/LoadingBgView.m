@@ -1,14 +1,32 @@
- //
-//  LoadingAndReflashView.m
-//  HKMember
 //
-//  Created by hua on 14-4-9.
-//  Copyright (c) 2014年 mypuduo. All rights reserved.
+//  LoadingBgView.m
+//  GameTerrace
+//
+//  Created by Charles on 2017/12/13.
+//  Copyright © 2017年 Charles. All rights reserved.
 //
 
-#import "LoadingAndRefreshView.h"
+#import "LoadingBgView.h"
 
-@implementation LoadingAndRefreshView
+@implementation LoadingBgView
+
+/**
+ *  actionSheet初始化方法
+ *  @param title        标题
+ */
+- (instancetype)initLoadingBgViewWithTitle:(NSString *)title
+                                complete:(void (^)(NSInteger buttonIndex))complete {
+    self = [super initWithFrame:CGRectZero];
+    if (self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self initWithFrame:CGRectZero];
+        });
+        
+    }
+    return self;
+}
+
+
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -36,7 +54,7 @@
     
     _refreshBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _refreshBtn.frame = CGRectMake(0, _loadingTip.bottom + 10, 0, 32 * H_Unit);
-    [_refreshBtn addTarget:self action:@selector(refreshClick) forControlEvents:UIControlEventTouchUpInside];
+    [_refreshBtn addTarget:self action:@selector(refreshAction:) forControlEvents:UIControlEventTouchUpInside];
     [_refreshBtn setTitle:@"重新加载" forState:UIControlStateNormal];
     _refreshBtn.titleLabel.font = kFontSize16;
     [_refreshBtn setTitleColor:kColorNavBgFrist forState:UIControlStateNormal];
@@ -152,8 +170,8 @@
         [images addObject:imageName];
         CGImageRelease(imageRef);
     }
-    _loadingView.size = CGSizeMake(120, 55.5);
-    _loadingView.contentMode = UIViewContentModeScaleAspectFit;
+    _loadingView.size = CGSizeMake(kScreenWidth, 77 * H_Unit);
+    _loadingView.contentMode = UIViewContentModeScaleToFill;
     _loadingView.animationImages = images;
     //每次动画时长
     _loadingView.animationDuration = 1;
@@ -173,9 +191,9 @@
 }
 
 // 刷新
-- (void)refreshClick {
-    if (_delegate && [_delegate respondsToSelector:@selector(refreshClickWithStatus:)]) {
-        [_delegate refreshClickWithStatus:_status];
+- (void)refreshAction:(UIButton *)button {
+    if (_refreshClick) {
+        _refreshClick(_status);
     }
 }
 

@@ -64,7 +64,7 @@
     _contentView = InsertView(self, CGRectMake(0, self.frame.size.height, self.frame.size.width, 300), [UIColor whiteColor]);
     _barView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40)];
     [_contentView addSubview:_barView];
-    InsertView(_barView, CGRectMake(0, _barView.height - 0.5, kScreenWidth, 0.5), kColorSeparatorline);
+    InsertView(_barView, CGRectMake(0, _barView.height - 0.5, kScreenWidth, 0.5), kColorSeparateline);
     
     UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(80, 0, self.frame.size.width - 160, 40)];
     title.text = @"生日";

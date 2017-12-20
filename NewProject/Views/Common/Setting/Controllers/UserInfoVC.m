@@ -127,7 +127,7 @@
             }];
         }
         if (indexPath.row != 3) {
-            InsertImageView(cell, CGRectMake(15, (indexPath.row == 0 ? 55 * H_Unit : 42 * H_Unit) - 0.5, kScreenWidth, 0.5), [UIImage imageWithColor:kColorSeparatorline]);
+            InsertImageView(cell, CGRectMake(15, (indexPath.row == 0 ? 55 * H_Unit : 42 * H_Unit) - 0.5, kScreenWidth, 0.5), [UIImage imageWithColor:kColorSeparateline]);
         }
     }
     cell.backgroundColor = kColorWhite;

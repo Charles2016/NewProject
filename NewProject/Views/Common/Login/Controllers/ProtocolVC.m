@@ -24,7 +24,7 @@
     self.navigationItem.title = @"用户协议";
     NSArray *titleArray = @[@"注册协议", @"多得彩平台服务协议", @"法律申明及隐私权政策"];
     for (int i = 0; i < 3; i++) {
-        UIButton *button = InsertButtonWithType(self.view, CGRectZero, 2017051205 + i, self, @selector(buttonAction:), UIButtonTypeCustom);
+        UIButton *button = InsertButton(self.view, CGRectZero, 2017051205 + i, self, @selector(buttonAction:), UIButtonTypeCustom);
         if (i == 0) {
             [self buttonAction:button];
         }

@@ -43,7 +43,7 @@
     _title.backgroundColor = kColorNavBgFrist;
     
     UIImage *closeImage = [UIImage imageNamed:@"mine_info_close"];
-    _close = InsertButtonWithType(_alertView, CGRectZero, 104215, self, @selector(hide:), UIButtonTypeCustom);
+    _close = InsertButton(_alertView, CGRectZero, 104215, self, @selector(hide:), UIButtonTypeCustom);
     [_close setImage:closeImage forState:UIControlStateNormal];
     [_close mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_alertView.mas_right).offset(-15);
@@ -65,7 +65,7 @@
         make.size.mas_equalTo(_girl.image.size);
     }];
     
-    _boyButton = InsertButtonWithType(_alertView, CGRectZero, 104216, self, @selector(chooseAction:), UIButtonTypeCustom);
+    _boyButton = InsertButton(_alertView, CGRectZero, 104216, self, @selector(chooseAction:), UIButtonTypeCustom);
     [_boyButton setBackgroundImage:[UIImage imageWithColor:UIColorHex(0xd9d9d9)] forState:UIControlStateNormal];
     [_boyButton setBackgroundImage:[UIImage imageWithColor:UIColorHex(0x9fdaf7)] forState:UIControlStateSelected];
     [_boyButton setTitle:@"男" forState:UIControlStateNormal];
@@ -79,7 +79,7 @@
         make.size.mas_equalTo(CGSizeMake(50, 20));
     }];
     
-    _girlButton = InsertButtonWithType(_alertView, CGRectZero, 104217, self, @selector(chooseAction:), UIButtonTypeCustom);
+    _girlButton = InsertButton(_alertView, CGRectZero, 104217, self, @selector(chooseAction:), UIButtonTypeCustom);
     [_girlButton setBackgroundImage:[UIImage imageWithColor:UIColorHex(0xd9d9d9)] forState:UIControlStateNormal];
     [_girlButton setBackgroundImage:[UIImage imageWithColor:UIColorHex(0xf99f98)] forState:UIControlStateSelected];
     [_girlButton setTitle:@"女" forState:UIControlStateNormal];
@@ -103,7 +103,7 @@
     
     InsertView(_alertView, CGRectMake(0, 256, self.width - 40, 0.5), kColorNavBgFrist);
     
-    _complete = InsertButtonWithType(_alertView, CGRectZero, 104218, self, @selector(hide:), UIButtonTypeCustom);
+    _complete = InsertButton(_alertView, CGRectZero, 104218, self, @selector(hide:), UIButtonTypeCustom);
     [_complete setTitle:@"完成" forState:UIControlStateNormal];
     [_complete setTitleColor:kColorNavBgFrist forState:UIControlStateNormal];
     _complete.titleLabel.font = kFontSize15;

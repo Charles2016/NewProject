@@ -81,10 +81,10 @@
     }];
     // 9、执行任务
     [task resume];*/
-    UIButton *button = InsertButtonWithType(self.view, CGRectMake(20, 80, kScreenWidth - 40, 40), 2001, self, @selector(pushAction), UIButtonTypeCustom);
+    UIButton *button = InsertButton(self.view, CGRectMake(20, 80, kScreenWidth - 40, 40), 2001, self, @selector(pushAction), UIButtonTypeCustom);
     [button setBackgroundColor:kColorBlue];
     
-    UIButton *button1 = InsertButtonWithType(self.view, CGRectMake(20, 80 + 60, kScreenWidth - 40, 40), 2001, self, @selector(pushAction1), UIButtonTypeCustom);
+    UIButton *button1 = InsertButton(self.view, CGRectMake(20, 80 + 60, kScreenWidth - 40, 40), 2001, self, @selector(pushAction1), UIButtonTypeCustom);
     [button1 setBackgroundColor:kColorBlue];
 }
 

@@ -13,4 +13,9 @@
 #define button_image     @"button_image"
 #define button_image_s   @"button_image_s"
 
+#define kGameIconDefault   kImageName(@"picture_4")
+#define kAdsDefault   kImageName(@"home_ads_1")
+#define kBannerDefault kImageName(@"home_banner")
+#define kAvatarDefault kImageName(@"avatar_default")
+
 #define MAX_SIZE 120 //　图片最大显示大小

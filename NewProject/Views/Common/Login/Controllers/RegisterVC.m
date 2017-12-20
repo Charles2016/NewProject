@@ -62,7 +62,7 @@
             make.size.mas_equalTo(CGSizeMake(15 * W_Unit, 15 * H_Unit));
         }];
         _textField[i].leftView = lefTView;
-        UIView *line = InsertView(self.view, CGRectZero , kColorSeparatorline);
+        UIView *line = InsertView(self.view, CGRectZero , kColorSeparateline);
         [line mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_textField[i].mas_bottom);
             make.left.equalTo(_textField[i].mas_left);
@@ -84,7 +84,7 @@
     
     NSArray *titleArray = @[@"获取验证码", @"立即注册", @""];
     for (int i = 0; i < titleArray.count; i++) {
-        _button[i] = InsertButtonWithType(self.view, CGRectZero, 104190 + i, self, @selector(buttonAction:), UIButtonTypeCustom);
+        _button[i] = InsertButton(self.view, CGRectZero, 104190 + i, self, @selector(buttonAction:), UIButtonTypeCustom);
         [_button[i] setTitle:titleArray[i] forState:UIControlStateNormal];
         _button[i].titleLabel.font = kFontSize13;
         [_button[i] setTitleColor:i == 0 ? kColorRed: kColorWhite forState:UIControlStateNormal];

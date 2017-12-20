@@ -34,7 +34,7 @@
     _textView.textColor = kColorBlack;
     _textView.backgroundColor = kColorWhite;
     
-    UIButton *opinion = InsertButtonWithType(self.view, CGRectZero, 104214, self, @selector(buttonAction), UIButtonTypeCustom);
+    UIButton *opinion = InsertButton(self.view, CGRectZero, 104214, self, @selector(buttonAction), UIButtonTypeCustom);
     [opinion setTitle:@"提交意见" forState:UIControlStateNormal];
     [opinion setBackgroundColor:kColorNavBgFrist];
     opinion.layer.cornerRadius = 5;

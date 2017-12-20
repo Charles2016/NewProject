@@ -32,7 +32,7 @@
 // 灰色—如内容字体颜色
 #define kColorGray          UIColorHex(0x9f9f9f)
 // 黑色—如内容为黑色字体颜色
-#define kColorBlack         UIColorHex(0x383838)
+#define kColorBlack         UIColorHex(0x333333)
 // 搜索焦点颜色
 #define kTintColorSearch UIColorRGB(2, 162, 253)
 // 主题背景色
@@ -53,7 +53,7 @@
 // 黑色-纯黑
 #define kColorDeepBlack UIColorHex(0x000000)
 // 灰色—如列表cell分割线颜色样式
-#define kColorSeparatorline UIColorHex(0xe6e6e6)
+#define kColorSeparateline UIColorHex(0xf3f3f3)
 // 灰色-边框线颜色
 #define kColorBorderline UIColorHex(0xb8b8b8)
 // 按钮不可用背景色
@@ -74,7 +74,7 @@
 #define kColorRed UIColorHex(0xff4545)
 #define kColorLightRed UIColorHex(0xe4393c)
 // 蓝色
-#define kColorBlue UIColorHex(0x6891fd)
+#define kColorBlue UIColorHex(0x4387f6)
 #define kColorLightBlue UIColorHex(0x3985ff)
 
 #endif

@@ -359,7 +359,7 @@
         _inputField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, _inputField.height)];
         _inputField.rightView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, _inputField.height)];
         _inputField.layer.borderWidth = 0.5;
-        _inputField.layer.borderColor = kColorSeparatorline.CGColor;
+        _inputField.layer.borderColor = kColorSeparateline.CGColor;
         _inputField.layer.cornerRadius = 5;
         [_alertView addSubview:_inputField];
         

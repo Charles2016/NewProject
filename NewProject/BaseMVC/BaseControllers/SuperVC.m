@@ -67,28 +67,12 @@
 
 - (void)setIsCurrentNavHide:(BOOL)isCurrentNavHide {
     _isCurrentNavHide = isCurrentNavHide;
-    UIColor *navColor = [self isTabbarRoot] ? kColorNavBgFrist : kColorNavBgOther;
-    UIColor *titleColor = [self isTabbarRoot] ? kColorWhite : kColorBlack;
-    [[self class] setNavigationStyle:self.navigationController textColor:titleColor barColor:navColor];
-    if (isCurrentNavHide) {
-        [[self class] setNavigationStyle:self.navigationController textColor:kColorWhite barColor:kColorNavBgFrist];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    } else {
-        [[UIApplication sharedApplication] setStatusBarStyle:[self isTabbarRoot] ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault];
-    }
     [self.navigationController setNavigationBarHidden:isCurrentNavHide animated:YES];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    DLog(@"kNetworkStatus:%ld", kNetworkStatus);
-    self.view.backgroundColor = kColorViewBg;
-    // 监控网络变化block status-1未知网络 0连不上网络 1xG网络 2WiFi网络
-    @weakify(self);
-    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        @strongify(self);
-        [self networkChangeAction:status];
-    }];
+    self.view.backgroundColor = kColorWhite;
     [self loadViewData];
     // 监听键盘事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -98,14 +82,13 @@
 }
 
 - (void)loadViewData {
-    self.view.backgroundColor = UIColorRGB(240, 240, 243);
     if (ISIOS7) {
-        self.tabBarController.tabBar.translucent = NO;
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-        self.extendedLayoutIncludesOpaqueBars = NO;
-        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.tabBarController.tabBar.translucent = NO;// controller中self.view的原点是从导航栏左下角开始计算
+        self.edgesForExtendedLayout = UIRectEdgeNone;// 从导航栏底部到tabar顶部
+        self.extendedLayoutIncludesOpaqueBars = NO;// 是否空出导航栏位置
+        self.automaticallyAdjustsScrollViewInsets = NO;// scrollView空出状态栏位置
     }
-    self.navigationItem.leftBarButtonItem = [self isTabbarRoot] ? nil : [[self class] setItemsTitles:nil imageNames:@[@"nav_back"] isRightItems:NO titleColor:nil target:self action:@selector(backToSuperView)];
+    self.navigationItem.leftBarButtonItem = [self isTabbarRoot] ? nil : [[self class] setItemsTitles:nil imageNames:@[@"nav_back_s"] isRightItems:NO titleColor:nil target:self action:@selector(backToSuperView)];
 }
 
 /**
@@ -172,10 +155,6 @@
     return NO;
 }
 
-- (void)networkChangeAction:(AFNetworkReachabilityStatus)status {
-
-}
-
 // 登录验证方法
 - (void)loginVerifySuccess:(void(^)())success {
     [[self class] loginVerifyWithSuccess:success];
@@ -193,7 +172,7 @@
             VC.successBlock = success;
         }
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:VC];
-        [SuperVC setNavigationStyle:nav textColor:kColorBlack barColor:kColorLightgray];
+        [SuperVC setNavigationStyle:nav textColor:kColorBlack barColor:kColorWhite];
         [currentVC presentViewController:nav animated:YES completion:nil];
     }
 }
@@ -338,7 +317,6 @@
     
 }
 
-
 // 网络请求，backToSuperView执行后就会取消正在请求的网络
 - (void)addNet:(NSURLSessionDataTask *)net {
     if (!_networkOperations) {
@@ -371,7 +349,7 @@
     nav.navigationBar.translucent = NO;
 }
 
-#pragma mark - SetNavButtonMethod
+#pragma mark - setNavButtonMethod
 /**
  *  导航栏按钮方法
  *  @param titles       如果是单个按钮名称或图片则返回单个item，多个则返回数组
@@ -392,10 +370,10 @@
             if ([titles[i] length]) {
                 [button setTitle:titles[i] forState:UIControlStateNormal];
                 button.titleLabel.font = [UIFont boldSystemFontOfSize:13];
-                CGFloat titleWidth = 0;
-                button.frame = CGRectMake(0, 0, MAX(44, titleWidth), 44);
+                CGSize size = [button.titleLabel.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:button.titleLabel.font} context:nil].size;
+                button.frame = CGRectMake(0, 0, MAX(64.0 / itemsCount, size.width + 10), 44);
                 [button setTitleColor:titleColor ? titleColor : [UIColor blackColor] forState:UIControlStateNormal];
-                button.titleEdgeInsets = isRightItems ? UIEdgeInsetsMake(0, 10 * (1 + 2 * i), 0, -10 * (1 + 2 * i)) : UIEdgeInsetsMake(0, -10 * (1 + 2 * i), 0, 10 * (1 + 2 * i));
+                button.titleEdgeInsets = isRightItems ? UIEdgeInsetsMake(0, button.frame.size.width - size.width, 0, 0) : UIEdgeInsetsMake(0, -button.frame.size.width + size.width, 0, 0);
             }
         }
         if (imageNames.count) {
@@ -403,8 +381,8 @@
                 UIImage *image = [UIImage imageNamed:imageNames[i]];
                 [button setImage:image forState:UIControlStateNormal];
                 button.touchAreaInsets = UIEdgeInsetsMake(20, 5, 20, 5);
-                button.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-                button.imageEdgeInsets = isRightItems ? UIEdgeInsetsMake(0, -5 * i, 0, 5 * i) : UIEdgeInsetsMake(0, 5 * i, 0, -5 * i);
+                button.frame = CGRectMake(0, 0, MAX(64.0 / itemsCount, image.size.width), MAX(44, image.size.height));
+                button.imageEdgeInsets = isRightItems ? UIEdgeInsetsMake(0, button.frame.size.width - image.size.width, 0, 0) : UIEdgeInsetsMake(0, -button.frame.size.width + image.size.width, 0, 0);
             }
         }
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];

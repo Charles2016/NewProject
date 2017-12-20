@@ -36,7 +36,7 @@
     }
     _nickname.backgroundColor = kColorWhite;
     
-    UIButton *save = InsertButtonWithType(self.view, CGRectZero, 104213, self, @selector(saveAction:), UIButtonTypeCustom);
+    UIButton *save = InsertButton(self.view, CGRectZero, 104213, self, @selector(saveAction:), UIButtonTypeCustom);
     [save setTitle:@"保存" forState:UIControlStateNormal];
     [save setBackgroundColor:kColorNavBgFrist];
     save.layer.cornerRadius = 5;

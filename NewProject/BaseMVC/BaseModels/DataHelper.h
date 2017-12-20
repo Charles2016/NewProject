@@ -19,6 +19,9 @@
 /// 将图片转换成所需尺寸
 + (UIImage *)originImage:(UIImage *)image scaleToSize:(CGSize)size;
 
+/// 获取图片某一点的颜色
++ (UIColor *)getColorAtPoint:(CGPoint)point image:(UIImage *)image;
+
 /// 保存图片到Cache
 + (void)saveImage:(UIImage *)tempImage WithPath:(NSString *)path;
 

@@ -101,7 +101,7 @@
             make.size.mas_equalTo(arrow.image.size);
         }];
         if (indexPath.row == 0) {
-            InsertImageView(cell, CGRectMake(15, 42 * H_Unit - 0.5, kScreenWidth - 15, 0.5), [UIImage imageWithColor:kColorSeparatorline]);
+            InsertImageView(cell, CGRectMake(15, 42 * H_Unit - 0.5, kScreenWidth - 15, 0.5), [UIImage imageWithColor:kColorSeparateline]);
         }
     }
     return cell;
@@ -134,7 +134,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIView *footerView = InsertView(nil, CGRectMake(0, 0, kScreenWidth, 120), kColorViewBg);
-    UIButton *loginOut = InsertButtonWithType(footerView, CGRectZero, 104213, self, @selector(loginOutAction:), UIButtonTypeCustom);
+    UIButton *loginOut = InsertButton(footerView, CGRectZero, 104213, self, @selector(loginOutAction:), UIButtonTypeCustom);
     [loginOut setTitle:@"退出登录" forState:UIControlStateNormal];
     [loginOut setBackgroundColor:kColorNavBgFrist];
     loginOut.layer.cornerRadius = 5;

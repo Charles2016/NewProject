@@ -24,7 +24,7 @@
 // 某个view附上小红点方法
 + (UILabel *)getRedpoitWithStr:(NSString *)str view:(UIView *)view;
 
-#pragma mark - public Method
+#pragma mark - publicMethod
 // 返回上一层
 - (void)backToSuperView;
 // 登录验证方法
@@ -70,7 +70,7 @@
 // 设置导航栏字体颜色和背景
 + (void)setNavigationStyle:(UINavigationController*)nav textColor:(UIColor *)textColor barColor:(UIColor *)barColor;
 
-#pragma mark - SetNavButtonMethod
+#pragma mark - setNavButtonMethod
 /**
  *  导航栏按钮方法
  *  @param titles       如果是单个按钮名称或图片则返回单个item，多个则返回数组

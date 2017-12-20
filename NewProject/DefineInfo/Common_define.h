@@ -92,7 +92,7 @@
 #define kSelfStrong __strong __typeof__(weakSelf) strongSelf = weakSelf
 
 // url
-#define kPriceString(price) [NSString stringWithFormat:@"%@",@([NSString stringWithFormat:@"%.2lf", price].floatValue)]
+#define kFloorString(price) [NSString stringWithFormat:@"%@",@([NSString stringWithFormat:@"%.2lf", price].floatValue)]
 #define kURLWithString(str)  [NSURL URLWithString:str]
 #define kGetUserDefaults(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
 #define kUserDefaults(key, value) [[NSUserDefaults standardUserDefaults] setObject:value forKey:key]
@@ -110,17 +110,23 @@
 // Height/Width
 #define kScreenWidth    [[UIScreen mainScreen] bounds].size.width
 #define kScreenHeight   [[UIScreen mainScreen] bounds].size.height
-#define kBodyHeight     (kScreenHeight - 44 - 20)
-#define kMiddleHeight   (kScreenHeight - 49 - 44 - 20)
-#define kUpHeight       (kScreenHeight - 49)
 
-#define W_Unit [[UIScreen mainScreen] bounds].size.width / 320
-#define H_Unit [[UIScreen mainScreen] bounds].size.height / 568
 
-#define kTabbarHeight       49
-#define kSearchBarHeight    45
-#define kStatusBarHeight    20
-#define kNavigationHeight   44
+#define kTabbarHeight       (kScreenHeight==812.0?83.f:49.f)
+#define kSearchBarHeight    45.f
+#define kStatusBarHeight    (kScreenHeight==812.0?44.f:20.f)
+#define kNavigationHeight   (kScreenHeight==812.0?88.f:64.f)
+// 表格顶部顶到导航栏情况，若非iPhoneX顶刘海加高
+#define kTableInsetHeight   (kScreenHeight==812.0?44.f:0.f)
+
+#define kBodyHeight     (kScreenHeight - kNavigationHeight)
+#define kMiddleHeight   (kScreenHeight - kNavigationHeight - kTabbarHeight)
+#define kUpHeight       (kScreenHeight - kTabbarHeight)
+
+#define W_Unit [[UIScreen mainScreen] bounds].size.width / 375.f
+#define H_Unit [[UIScreen mainScreen] bounds].size.height / 667.f
+
+
 #define ScreenMutiple (iPhone6?1.171875:(iPhone6plus?1.29375:1))
 
 /// System判断
@@ -131,6 +137,7 @@
 #define ISiPhone5   ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 #define ISiPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? (CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size)) : NO)
 #define ISiPhone6plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? (CGSizeEqualToSize(CGSizeMake(1125, 2001), [[UIScreen mainScreen] currentMode].size) || CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size)) : NO)
+
 
 #ifndef __OPTIMIZE__
 #define NSLog(...) NSLog(__VA_ARGS__)

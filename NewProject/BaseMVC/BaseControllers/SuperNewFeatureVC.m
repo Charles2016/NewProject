@@ -22,6 +22,10 @@
 
 @implementation SuperNewFeatureVC
 
+- (void)dealloc {
+    DLog(@"%@释放了",NSStringFromClass([self class]));
+}
+
 - (instancetype)initWithComplete:(void(^)())complete {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -38,13 +42,16 @@
 - (void)setUI {
     // 第一个启动页页面延续view
     _bgImageView = [[UIImageView alloc] init];
-    NSString *imageName = nil;
-    NSArray* imagesArray = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
-    if (imagesArray.count) {
-        imageName = imagesArray.lastObject[@"UILaunchImageName"];
+    UIImage *image = nil;
+    NSArray *imagesArray = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
+    for (NSDictionary *dic in imagesArray) {
+        UIImage *temp = [UIImage imageNamed:dic[@"UILaunchImageName"]];
+        if (CGSizeEqualToSize(temp.size, [[UIScreen mainScreen] bounds].size)) {
+            image = temp;
+        }
     }
     _bgImageView.contentMode = UIViewContentModeScaleToFill;
-    _bgImageView.image = [UIImage imageNamed:imageName];
+    _bgImageView.image = image;
     [self.view addSubview:_bgImageView];
     [_bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -80,7 +87,7 @@
         make.edges.equalTo(self.view);
     }];
     
-    /*_pageControl = [[ADPageControl alloc] init];
+    _pageControl = [[ADPageControl alloc] init];
     [_pageControl setPageIndicatorImage:[UIImage imageNamed:@"adScroll_white_point"]];
     [_pageControl setCurrentPageIndicatorImage:[UIImage imageNamed:@"adScroll_black_point"]];
     [self.view addSubview:_pageControl];
@@ -89,17 +96,22 @@
         make.bottom.equalTo(self.view.mas_bottom).offset(-15);
         make.width.equalTo(self.view);
         make.height.equalTo(@20);
-    }];*/
+    }];
     
     CGSize viewSize = self.view.frame.size;
     for (int i = 0; i < INT_MAX; i++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"feature_%d", i + 1]];
         if(image) {
+            UIView *viewBg = [[UIView alloc]init];
+            viewBg.backgroundColor = [DataHelper getColorAtPoint:CGPointMake(image.size.width - 4, image.size.height - 4) image:image];
+            [_scrollBody addSubview:viewBg];
+            
             UIImageView *imageView = [[UIImageView alloc] init];
-            imageView.contentMode = UIViewContentModeScaleToFill;
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
             imageView.tag = 2017061300 + i;
-            imageView.frame = (CGRect){{i * viewSize.width, 0} , viewSize};
-            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"feature_%d", i + 1]];
+            viewBg.frame = imageView.frame = (CGRect){{i * viewSize.width, 0} , viewSize};
+            imageView.image = image;
+            imageView.backgroundColor = [UIColor clearColor];
             [_scrollBody addSubview:imageView];
         } else {
             _itemCount = i;
@@ -140,16 +152,16 @@
 
 #pragma mark - privateMethod
 - (void)hideAction:(BOOL)isFirstTime {
-    UIImageView *imageView = isFirstTime ? [self.view viewWithTag:2017061300 + _itemCount - 1] : _bgImageView;
-    [UIView animateWithDuration:0.8f animations:^{
-        imageView.alpha = 0.6f;
-        imageView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.5, 1.5, 1);
-    } completion:^(BOOL finished) {
+//    UIImageView *imageView = isFirstTime ? [self.view viewWithTag:2017061300 + _itemCount - 1] : _bgImageView;
+//    [UIView animateWithDuration:0.2f animations:^{
+//        imageView.alpha = 0.6f;
+//        imageView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.5, 1.5, 1);
+//    } completion:^(BOOL finished) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
         if (_completeBlock) {
             _completeBlock();
         }
-    }];
+//    }];
 }
 
 #pragma mark - loadData
