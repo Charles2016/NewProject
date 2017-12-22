@@ -62,6 +62,7 @@
 		565AF5151FE9F75B00DAC840 /* SuperTabbarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 565AF4FC1FE9F75B00DAC840 /* SuperTabbarVC.m */; };
 		565AF5161FE9F75B00DAC840 /* SuperVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 565AF4FE1FE9F75B00DAC840 /* SuperVC.m */; };
 		565AF5171FE9F75B00DAC840 /* SuperWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 565AF5001FE9F75B00DAC840 /* SuperWebVC.m */; };
+		565BD6631FECB7FE00730D88 /* CollectionMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 565BD6621FECB7FD00730D88 /* CollectionMenuView.m */; };
 		568396BF1FBBEBC100CFA9B2 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 568396BE1FBBEBC100CFA9B2 /* MBProgressHUD.m */; };
 		56AB48991FBC14CA0008A604 /* HUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 56AB48971FBC14CA0008A604 /* HUDManager.m */; };
 		56AF001F1FB5A661000E2F25 /* NetConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 56AF001D1FB5A661000E2F25 /* NetConfigure.m */; };
@@ -217,6 +218,8 @@
 		565AF4FE1FE9F75B00DAC840 /* SuperVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperVC.m; sourceTree = "<group>"; };
 		565AF4FF1FE9F75B00DAC840 /* SuperWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperWebVC.h; sourceTree = "<group>"; };
 		565AF5001FE9F75B00DAC840 /* SuperWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperWebVC.m; sourceTree = "<group>"; };
+		565BD6611FECB7FD00730D88 /* CollectionMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionMenuView.h; sourceTree = "<group>"; };
+		565BD6621FECB7FD00730D88 /* CollectionMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionMenuView.m; sourceTree = "<group>"; };
 		568396BD1FBBEBC000CFA9B2 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		568396BE1FBBEBC100CFA9B2 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		56AB48971FBC14CA0008A604 /* HUDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDManager.m; sourceTree = "<group>"; };
@@ -445,6 +448,8 @@
 				56AF007C1FB5AD47000E2F25 /* TimeUtil.m */,
 				56AF007F1FB5AD48000E2F25 /* UICollectionSectionViewFlowLayout.h */,
 				56AF00801FB5AD48000E2F25 /* UICollectionSectionViewFlowLayout.m */,
+				565BD6611FECB7FD00730D88 /* CollectionMenuView.h */,
+				565BD6621FECB7FD00730D88 /* CollectionMenuView.m */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -1014,6 +1019,7 @@
 				565AF4C41FE9F69300DAC840 /* LoginVC.m in Sources */,
 				565AF50C1FE9F75B00DAC840 /* UUID.m in Sources */,
 				5657B2371FBAEFE00030771B /* UIImage+Color.m in Sources */,
+				565BD6631FECB7FE00730D88 /* CollectionMenuView.m in Sources */,
 				565AF5171FE9F75B00DAC840 /* SuperWebVC.m in Sources */,
 				56AF00DB1FB5AF43000E2F25 /* MJRefreshGifHeader.m in Sources */,
 				56AF00E11FB5AF43000E2F25 /* UIView+MJExtension.m in Sources */,
