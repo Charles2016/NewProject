@@ -160,7 +160,7 @@
     [[self class] loginVerifyWithSuccess:success];
 }
 
-+ (void)loginVerifyWithSuccess:(void (^)())success {
++ (void)loginVerifyWithSuccess:(void(^)())success {
     if (GetDataUserModel.isLogin) {
         if (success) {
             success();

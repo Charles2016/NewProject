@@ -22,9 +22,6 @@ PODS:
     - FMDB
   - Masonry (1.0.1)
   - MJExtension (3.0.13)
-  - SDWebImage (3.7.6):
-    - SDWebImage/Core (= 3.7.6)
-  - SDWebImage/Core (3.7.6)
 
 DEPENDENCIES:
   - AFNetworking (= 3.1.0)
@@ -32,7 +29,6 @@ DEPENDENCIES:
   - LKDBHelper (= 2.1.9)
   - Masonry (= 1.0.1)
   - MJExtension (= 3.0.13)
-  - SDWebImage (= 3.7.6)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -41,8 +37,7 @@ SPEC CHECKSUMS:
   LKDBHelper: 78e6c0de99f45375892223a334535d745a123dbd
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
 
-PODFILE CHECKSUM: fa98d8ac747c8a24f8b8906c24831fd5e543e823
+PODFILE CHECKSUM: 03ffbdd70cbe98d1b3ba0766f36a26c903a15b80
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.4.0.rc.1

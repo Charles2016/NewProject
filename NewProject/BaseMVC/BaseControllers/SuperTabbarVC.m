@@ -25,7 +25,7 @@
 }
 
 -(void)setUI {
-    NSArray *views = @[@[@"HomeVC", @"ClassifyVC", @"ShoppingCar", @"MineVC"],
+    NSArray *views = @[@[@"HomeVC", @"ClassifyVC", @"ShoppingCarVC", @"MineVC"],
                        @[@"首页", @"分类", @"购物车", @"我的"]];
     _viewcontrollers = [NSMutableArray arrayWithCapacity:4];
     for (int i = 0; i < [views[0] count]; i ++) {

@@ -58,7 +58,7 @@
 #import "MJExtension.h"
 #import "Masonry.h"
 #import "LKDBHelper.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 
 /********************** app环境 ****************************/
